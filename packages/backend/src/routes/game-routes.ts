@@ -6,7 +6,7 @@ import { Router, Request, Response } from 'express';
 import { GameService } from '../services/game-service.js';
 import { GameConfig, PlayerCount, GameAction } from '@brass/shared';
 
-const router = Router();
+const router: Router = Router();
 
 /**
  * Create a new game

@@ -82,7 +82,7 @@ export function getPlayerNetwork(state: GameState, playerId: string): Set<Locati
   // Add locations with player's industries
   for (const tile of state.placedIndustries.values()) {
     if (tile.playerId === playerId) {
-      network.add(tile.location);
+      network.add(tile.location as Location);
     }
   }
 
