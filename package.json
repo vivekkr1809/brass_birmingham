@@ -1,0 +1,50 @@
+{
+  "name": "brass-birmingham",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Digital implementation of Brass Birmingham board game",
+  "keywords": ["brass-birmingham", "board-game", "multiplayer"],
+  "author": "Brass Birmingham Development Team",
+  "license": "SEE LICENSE IN LICENSE",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\"",
+    "dev:backend": "pnpm --filter @brass/backend dev",
+    "dev:frontend": "pnpm --filter @brass/frontend dev",
+    "build": "pnpm --filter @brass/shared build && pnpm --filter @brass/backend build && pnpm --filter @brass/frontend build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
+    "typecheck": "pnpm --filter @brass/shared typecheck && pnpm --filter @brass/backend typecheck && pnpm --filter @brass/frontend typecheck",
+    "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist",
+    "db:migrate": "pnpm --filter @brass/backend db:migrate",
+    "db:seed": "pnpm --filter @brass/backend db:seed",
+    "db:reset": "pnpm --filter @brass/backend db:reset"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "@vitest/coverage-v8": "^1.0.4",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.12.0"
+}
