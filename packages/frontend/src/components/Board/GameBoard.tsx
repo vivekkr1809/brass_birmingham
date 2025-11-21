@@ -14,7 +14,6 @@ interface GameBoardProps {
 
 export function GameBoard({ gameState, selectedLocation, onSelectLocation }: GameBoardProps) {
   const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
 
   // Board dimensions
   const boardWidth = 1200;
@@ -43,7 +42,7 @@ export function GameBoard({ gameState, selectedLocation, onSelectLocation }: Gam
             +
           </button>
           <button
-            onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}
+            onClick={() => setZoom(1)}
             className="btn btn-secondary px-3 py-1 text-sm"
           >
             Reset

@@ -3,7 +3,7 @@
  */
 
 import { create } from 'zustand';
-import { GameState, GameAction, ActionResult } from '@brass/shared';
+import { GameState } from '@brass/shared';
 
 interface GameStore {
   // Current game state

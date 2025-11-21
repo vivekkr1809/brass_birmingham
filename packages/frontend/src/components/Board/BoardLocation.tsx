@@ -3,7 +3,6 @@
  */
 
 import { GameState, BoardLocation as BoardLocationType } from '@brass/shared';
-import clsx from 'clsx';
 
 interface BoardLocationProps {
   location: BoardLocationType;

@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { GameState } from '@brass/shared';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
+const SOCKET_URL = import.meta.env.VITE_WS_URL || 'http://localhost:3001';
 
 interface UseWebSocketProps {
   gameId: string | null;
@@ -14,7 +14,7 @@ interface UseWebSocketProps {
   onError?: (error: any) => void;
 }
 
-export function useWebSocket({ gameId, onGameStateUpdate, onError }: UseWebSocketProps) {
+export function useWebSocket({ gameId, onGameStateUpdate, onError }: UseWebSocketProps): Socket | null {
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {

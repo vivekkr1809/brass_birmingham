@@ -109,12 +109,20 @@ export default function GamePage() {
   const availableActions = GameEngine.getAvailableActions(gameState);
 
   const handleExecuteAction = async () => {
-    // TODO: Implement action execution based on selected action type
+    // TODO: Implement full action execution
+    // This requires complex UI for:
+    // - Selecting specific industry tiles to build (with tile IDs)
+    // - Choosing resource sources (coal mines, iron works, breweries) with costs
+    // - Selecting multiple connections for network action
+    // - Choosing merchants and tiles to flip for sell action
+    // The action structure in the backend requires complete GameCard objects,
+    // specific tile IDs, resource sources with costs, and merchant IDs
     console.log('Execute action:', selectedAction);
     console.log('Selected card:', selectedCard);
     console.log('Selected location:', selectedLocation);
 
-    // For now, just clear selection
+    alert('Action execution UI is under development.\n\nThis requires:\n- Tile selection with specific IDs\n- Resource source selection\n- Complex validation\n- Backend API integration');
+
     clearSelection();
     setSelectedAction(null);
   };
@@ -206,7 +214,7 @@ export default function GamePage() {
                 disabled={!isMyTurn || myPlayer.hasPassed}
               />
 
-              {/* Action execution */}
+              {/* Action execution placeholder */}
               {selectedAction && selectedCard && (
                 <div className="bg-gray-900 rounded-lg p-4 border-2 border-amber-500">
                   <h3 className="text-lg font-bold text-amber-500 mb-3">
@@ -218,12 +226,26 @@ export default function GamePage() {
                     {selectedLocation && <div>Location: {selectedLocation}</div>}
                   </div>
 
+                  <div className="bg-yellow-900 border border-yellow-700 rounded p-3 mb-4 text-xs text-yellow-100">
+                    <strong>Full action execution UI is under development.</strong>
+                    <br />
+                    <br />
+                    This requires:
+                    <ul className="list-disc list-inside mt-2">
+                      <li>Tile selection (which specific industry tile to build)</li>
+                      <li>Resource source selection (coal mines, iron works, breweries)</li>
+                      <li>Merchant and tile selection for selling</li>
+                      <li>Connection selection for network building</li>
+                      <li>Complex validation with the GameEngine</li>
+                    </ul>
+                  </div>
+
                   <div className="flex gap-2">
                     <button
                       onClick={handleExecuteAction}
                       className="btn btn-primary flex-1"
                     >
-                      ✓ Confirm
+                      ✓ Placeholder
                     </button>
                     <button
                       onClick={() => {
