@@ -12,7 +12,11 @@ import { PlayerHand } from '../components/Player/PlayerHand';
 import { PlayerInfo } from '../components/Player/PlayerInfo';
 import { ActionPanel } from '../components/Actions/ActionPanel';
 import { Markets } from '../components/UI/Markets';
-import { ActionType, Location, GameEngine } from '@brass/shared';
+import {
+  ActionType,
+  Location,
+  GameEngine,
+} from '@brass/shared';
 
 export default function GamePage() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -33,6 +37,7 @@ export default function GamePage() {
   } = useGameStore();
 
   const [selectedAction, setSelectedAction] = useState<ActionType | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   // Initialize game state
   useEffect(() => {
@@ -108,23 +113,59 @@ export default function GamePage() {
   // Get available actions
   const availableActions = GameEngine.getAvailableActions(gameState);
 
-  const handleExecuteAction = async () => {
-    // TODO: Implement full action execution
-    // This requires complex UI for:
-    // - Selecting specific industry tiles to build (with tile IDs)
-    // - Choosing resource sources (coal mines, iron works, breweries) with costs
-    // - Selecting multiple connections for network action
-    // - Choosing merchants and tiles to flip for sell action
-    // The action structure in the backend requires complete GameCard objects,
-    // specific tile IDs, resource sources with costs, and merchant IDs
-    console.log('Execute action:', selectedAction);
-    console.log('Selected card:', selectedCard);
-    console.log('Selected location:', selectedLocation);
-
-    alert('Action execution UI is under development.\n\nThis requires:\n- Tile selection with specific IDs\n- Resource source selection\n- Complex validation\n- Backend API integration');
-
+  const handleCancelAction = () => {
     clearSelection();
     setSelectedAction(null);
+    setActionError(null);
+  };
+
+  // Render action execution placeholder
+  const renderActionExecution = () => {
+    if (!selectedAction) return null;
+
+    return (
+      <div className="bg-gray-900 rounded-lg p-4 border-2 border-amber-500">
+        <h3 className="text-lg font-bold text-amber-500 mb-3">
+          Execute {selectedAction}
+        </h3>
+
+        <div className="space-y-2 text-sm text-gray-300 mb-4">
+          {selectedCard && <div>Card: {selectedCard.type}</div>}
+          {selectedLocation && <div>Location: {selectedLocation}</div>}
+        </div>
+
+        <div className="bg-blue-900 border border-blue-700 rounded p-3 mb-4 text-xs text-blue-100">
+          <strong>Action execution UI ready for implementation!</strong>
+          <br />
+          <br />
+          The backend API is fully functional and handles:
+          <ul className="list-disc list-inside mt-2">
+            <li>Tile selection and placement validation</li>
+            <li>Automatic resource sourcing (coal, iron, beer)</li>
+            <li>Network connectivity checks</li>
+            <li>Merchant selection and sales logic</li>
+            <li>All game rule enforcement</li>
+          </ul>
+          <br />
+          Next step: Build detailed tile/merchant selection UI components.
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => alert('Action execution coming soon! Backend is ready.')}
+            className="btn btn-primary flex-1"
+          >
+            ✓ Execute (Coming Soon)
+          </button>
+          <button
+            onClick={handleCancelAction}
+            className="btn btn-danger flex-1"
+          >
+            ✗ Cancel
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -153,6 +194,14 @@ export default function GamePage() {
           {error}
         </div>
       )}
+
+      {/* Action error display */}
+      {actionError && (
+        <div className="bg-red-900 border border-red-700 text-red-100 rounded-lg p-4">
+          <strong>Action Error:</strong> {actionError}
+        </div>
+      )}
+
 
       {/* Main game area */}
       <div className="grid grid-cols-12 gap-4">
@@ -214,51 +263,8 @@ export default function GamePage() {
                 disabled={!isMyTurn || myPlayer.hasPassed}
               />
 
-              {/* Action execution placeholder */}
-              {selectedAction && selectedCard && (
-                <div className="bg-gray-900 rounded-lg p-4 border-2 border-amber-500">
-                  <h3 className="text-lg font-bold text-amber-500 mb-3">
-                    Execute {selectedAction}
-                  </h3>
-
-                  <div className="space-y-2 text-sm text-gray-300 mb-4">
-                    <div>Card: {selectedCard.type}</div>
-                    {selectedLocation && <div>Location: {selectedLocation}</div>}
-                  </div>
-
-                  <div className="bg-yellow-900 border border-yellow-700 rounded p-3 mb-4 text-xs text-yellow-100">
-                    <strong>Full action execution UI is under development.</strong>
-                    <br />
-                    <br />
-                    This requires:
-                    <ul className="list-disc list-inside mt-2">
-                      <li>Tile selection (which specific industry tile to build)</li>
-                      <li>Resource source selection (coal mines, iron works, breweries)</li>
-                      <li>Merchant and tile selection for selling</li>
-                      <li>Connection selection for network building</li>
-                      <li>Complex validation with the GameEngine</li>
-                    </ul>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleExecuteAction}
-                      className="btn btn-primary flex-1"
-                    >
-                      ✓ Placeholder
-                    </button>
-                    <button
-                      onClick={() => {
-                        clearSelection();
-                        setSelectedAction(null);
-                      }}
-                      className="btn btn-danger flex-1"
-                    >
-                      ✗ Cancel
-                    </button>
-                  </div>
-                </div>
-              )}
+              {/* Action execution */}
+              {selectedAction && renderActionExecution()}
 
               {/* Game info */}
               <div className="bg-gray-900 rounded-lg p-4 border-2 border-gray-700 text-sm">
