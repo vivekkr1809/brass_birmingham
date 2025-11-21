@@ -9,6 +9,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/error-handler.js';
 import { setupSocketHandlers } from './socket/index.js';
+import gameRoutes from './routes/game-routes.js';
 
 // Load environment variables
 dotenv.config();
@@ -49,8 +50,14 @@ app.get('/api', (req, res) => {
   });
 });
 
+// Game routes
+app.use('/api/games', gameRoutes);
+
 // Socket.IO handlers
 setupSocketHandlers(io);
+
+// Make io available to services
+export { io };
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
